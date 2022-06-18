@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    
+}
+
+.left-column {
+    display: flex;
+    border: 1px solid black;
+}
+
+.center-column {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    border: 1px solid red;
+}
+
+.right-column {
+    display: flex;
+    border: 1px solid black;
+}
+
+.calculator-container {
+    border: 2px solid orange;
+    width: 400px;
+    height: 800px;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 2px;
+}
