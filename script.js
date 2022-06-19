@@ -4,7 +4,8 @@ let display = document.querySelector(`.display`);
 //let userInput = ``;
 let firstOperand = ``;
 let secondOperand = ``;
-let operator = null;
+let operator = ``;
+let result = ``;
 //let secondOperator = null;
 
 numButtons.forEach((button) =>{
@@ -22,21 +23,23 @@ funcButtons.forEach((button) => {
 });
 
 function processNum(input) {
-    if (operator === null) {
+    if (operator === ``) {
         firstOperand += input;
-        display.textContent = firstOperand;
-    } else if (operator !== null) {
+        //display.textContent = firstOperand;
+        updateDisplay();
+    } else if (operator !== ``) {
         secondOperand += input;
-        display.textContent = secondOperand;
+        //display.textContent = secondOperand;
+        updateDisplay();
     }
 }
 
 function processFunc(input) {
-    if (input === `=`) {
-        let result = operate(operator, +firstOperand, +secondOperand);
-        display.textContent = result;
-    }
-    if (firstOperand) {
+    if (input === `C`) {
+        clear();
+    } else if (input === `=`) {
+        equals();
+    } else if (firstOperand !== ``) {
         operator = input;
     }
 }
@@ -66,5 +69,33 @@ function operate(operator, a, b) {
         return multiply(a, b);
     } else if (operator === "/") {
         return divide(a, b);
+    }
+}
+
+function equals() {
+    result = operate(operator, +firstOperand, +secondOperand);
+    firstOperand = result;
+    secondOperand = ``;
+    operator = ``;
+    updateDisplay();
+}
+
+function clear() {
+    firstOperand = ``;
+    secondOperand = ``;
+    operator = ``;
+    result = ``;
+    updateDisplay();
+}
+
+function updateDisplay() {
+    if (result !== `` && secondOperand === ``) {
+        display.textContent = result;
+    } else if (secondOperand !== ``) {
+        display.textContent = secondOperand;
+    } else if (firstOperand !== ``) {
+        display.textContent = firstOperand;
+    } else {
+        display.textContent = ``;
     }
 }
