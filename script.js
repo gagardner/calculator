@@ -1,8 +1,11 @@
-let buttons = document.querySelectorAll(`button`);
+let buttons = document.querySelectorAll(`.num-button`);
+let display = document.querySelector(`.display`);
+let text = ``;
 
 buttons.forEach((button) =>{
     button.addEventListener("click", function() {
-        console.log(button.textContent);
+    text += button.textContent;
+    display.textContent = text;        
     });
 });
 
