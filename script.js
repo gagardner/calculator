@@ -1,23 +1,33 @@
 let numButtons = document.querySelectorAll(`.num-button`);
 let funcButtons = document.querySelectorAll(`.func-button`);
+let equalsButton = document.querySelector(`.equals-button`);
 let display = document.querySelector(`.display`);
 
 let firstOperand = ``;
 let secondOperand = ``;
 let operator = ``;
 let result = ``;
-let secondOperator = ``;
+let lastOperator = ``;
+let secondOperandStore = ``;
+//let secondOperator = ``;
 
 numButtons.forEach((button) =>{
     button.addEventListener("click", function() {
-    processNum(button.textContent);
+        processNum(button.textContent);
+        updateDisplay();
     });
 });
 
 funcButtons.forEach((button) => {
     button.addEventListener("click", function() {
         processFunc(button.textContent);
+        updateDisplay();
     });
+});
+
+equalsButton.addEventListener("click", () => {
+    equals();
+    updateDisplay();
 });
 
 function processNum(input) {
@@ -26,21 +36,23 @@ function processNum(input) {
     } else if (operator !== ``) {
         secondOperand += input;
     }
-    updateDisplay();
+    secondOperandStore = secondOperand;
+    //updateDisplay();
 }
 
 function processFunc(input) {
     if (input === `C`) {
         clear();
-    } else if (input === `=`) {
-        equals();
+    //} else if (input === `=`) {
+    //    equals();
     } else if (firstOperand !== `` && secondOperand !== ``) {
         equals();
         operator = input;
     } else if (firstOperand !== ``) {
         operator = input;
     }
-    updateDisplay();
+    //updateDisplay();
+    lastOperator = input;
 }
 
 function add(a, b) {
@@ -61,21 +73,27 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === "+") {
-        return add(a, b);
+        return add(+a, +b);
     } else if (operator === "-") {
-        return subtract(a, b);
+        return subtract(+a, +b);
     } else if (operator === "*") {
-        return multiply(a, b);
+        return multiply(+a, +b);
     } else if (operator === "/") {
-        return divide(a, b);
+        return divide(+a, +b);
     }
 }
 
 function equals() {
-    result = operate(operator, +firstOperand, +secondOperand);
+    if (firstOperand !== `` && secondOperand !== ``) {
+        result = operate(operator, firstOperand, secondOperand);
+    } else if (firstOperand !== `` && secondOperand === ``) {
+        result = operate(lastOperator, firstOperand, secondOperandStore);
+    }
+
     firstOperand = result;
     secondOperand = ``;
-    operator = ``;
+    //operator = ``;
+    //updateDisplay();
 }
 
 function clear() {
