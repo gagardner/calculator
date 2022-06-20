@@ -1,18 +1,16 @@
 let numButtons = document.querySelectorAll(`.num-button`);
 let funcButtons = document.querySelectorAll(`.func-button`);
 let display = document.querySelector(`.display`);
-//let userInput = ``;
+
 let firstOperand = ``;
 let secondOperand = ``;
 let operator = ``;
 let result = ``;
-//let secondOperator = null;
+let secondOperator = ``;
 
 numButtons.forEach((button) =>{
     button.addEventListener("click", function() {
-    //userInput += button.textContent;
     processNum(button.textContent);
-    //display.textContent = text;        
     });
 });
 
@@ -25,13 +23,10 @@ funcButtons.forEach((button) => {
 function processNum(input) {
     if (operator === ``) {
         firstOperand += input;
-        //display.textContent = firstOperand;
-        updateDisplay();
     } else if (operator !== ``) {
         secondOperand += input;
-        //display.textContent = secondOperand;
-        updateDisplay();
     }
+    updateDisplay();
 }
 
 function processFunc(input) {
@@ -39,9 +34,13 @@ function processFunc(input) {
         clear();
     } else if (input === `=`) {
         equals();
+    } else if (firstOperand !== `` && secondOperand !== ``) {
+        equals();
+        operator = input;
     } else if (firstOperand !== ``) {
         operator = input;
     }
+    updateDisplay();
 }
 
 function add(a, b) {
@@ -77,7 +76,6 @@ function equals() {
     firstOperand = result;
     secondOperand = ``;
     operator = ``;
-    updateDisplay();
 }
 
 function clear() {
@@ -85,7 +83,6 @@ function clear() {
     secondOperand = ``;
     operator = ``;
     result = ``;
-    updateDisplay();
 }
 
 function updateDisplay() {
