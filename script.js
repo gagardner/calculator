@@ -1,6 +1,7 @@
 let numButtons = document.querySelectorAll(`.num-button`);
 let funcButtons = document.querySelectorAll(`.func-button`);
 let equalsButton = document.querySelector(`.equals-button`);
+let decimalButton = document.querySelector(`.decimal-button`);
 let display = document.querySelector(`.display`);
 
 let firstOperand = ``;
@@ -30,8 +31,16 @@ equalsButton.addEventListener("click", () => {
     updateDisplay();
 });
 
+decimalButton.addEventListener("click", () => {
+    addDecimal();
+    updateDisplay();
+});
+
 function processNum(input) {
     if (operator === ``) {
+        if (firstOperand.length === 0 && input === `0`) {
+            return;
+        }
         firstOperand += input;
     } else if (operator !== ``) {
         secondOperand += input;
@@ -101,6 +110,18 @@ function clear() {
     secondOperand = ``;
     operator = ``;
     result = ``;
+}
+
+function addDecimal() {
+    if (!firstOperand.includes(`.`)) {
+        firstOperand += `.`;
+        updateDisplay();
+        decimalButton.removeEventListener("click", null);
+    } else if (firstOperand !== `` && operator !== `` && !secondOperand.includes(`.`)) {
+        secondOperand += `.`;
+        updateDisplay();
+        decimalButton.removeEventListener("click", null);
+    }
 }
 
 function updateDisplay() {
