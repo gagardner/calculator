@@ -6,7 +6,7 @@ let delButton = document.querySelector(`.del-button`);
 let display = document.querySelector(`.display`);
 
 let firstOperand = `0`;
-let secondOperand = `0`;
+let secondOperand = ``;
 let operator = ``;
 let result = ``;
 let lastOperator = ``;
@@ -51,20 +51,20 @@ function processNum(input) {
             firstOperand += input;
         }
     } else if (operator !== ``) {
-        if (secondOperand === `0` && input !== 0) {
+        if (secondOperand === `` && input !== 0) {
             secondOperand = input;
         } else {
             secondOperand += input;
         }
     }
     secondOperandStore = secondOperand;
-    //updateDisplay();
+    updateDisplay();
 }
 
 function processFunc(input) {
     if (input === `C`) {
         clear();
-    } else if (firstOperand !== `0` && secondOperand !== `0`) {
+    } else if (firstOperand !== `0` && secondOperand !== ``) {
         equals();
         operator = input;
     } else if (firstOperand !== `0`) {
@@ -103,21 +103,22 @@ function operate(operator, a, b) {
 }
 
 function equals() {
-    if (firstOperand !== `0` && secondOperand !== `0`) {
+    if (firstOperand !== `0` && secondOperand !== ``) {
         result = operate(operator, firstOperand, secondOperand);
-    } else if (firstOperand !== `0` && secondOperand === `0`) {
+    } else if (firstOperand !== `0` && secondOperand === ``) {
         result = operate(lastOperator, firstOperand, secondOperandStore);
     }
 
     firstOperand = result;
-    secondOperand = `0`;
+    secondOperand = ``;
+    result = ``;
     //operator = ``;
     //updateDisplay();
 }
 
 function clear() {
     firstOperand = `0`;
-    secondOperand = `0`;
+    secondOperand = ``;
     operator = ``;
     result = ``;
 }
@@ -128,9 +129,13 @@ function addDecimal() {
         updateDisplay();
         decimalButton.removeEventListener("click", null);
     } else if (operator !== `` && !secondOperand.includes(`.`)) {
-        secondOperand += `.`;
-        updateDisplay();
-        decimalButton.removeEventListener("click", null);
+        if (secondOperand.length === 0) {
+            secondOperand += `0.`;
+        } else {
+            secondOperand += `.`;
+            updateDisplay();
+            decimalButton.removeEventListener("click", null);
+        }
     }
 }
 
@@ -147,12 +152,11 @@ function deleteInput() {
 }
 
 function updateDisplay() {
-    if (result !== ``) {
-        display.textContent = result;
-    } else if (operator !== `` && secondOperand.length > 1) {
-        display.textContent = secondOperand;
-    } else if (operator !== `` && secondOperand.length === 1) {
+    
+    if (operator !== `` && secondOperand.length === 0) {
         display.textContent = firstOperand;
+    } else if (operator !== `` && secondOperand.length >= 1) {
+        display.textContent = secondOperand;
     } else if (operator === ``) {
         display.textContent = firstOperand;
     } else {
