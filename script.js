@@ -51,7 +51,9 @@ function processNum(input) {
             firstOperand += input;
         }
     } else if (operator !== ``) {
-        if (secondOperand === `` && input !== 0) {
+        if (secondOperand === ``) {
+            secondOperand = input;
+        } else if (operator !== `` && secondOperand === `0` && input !== `.`) {
             secondOperand = input;
         } else {
             secondOperand += input;
@@ -126,17 +128,17 @@ function clear() {
 function addDecimal() {
     if (!firstOperand.includes(`.`) && operator === ``) {
         firstOperand += `.`;
-        updateDisplay();
         decimalButton.removeEventListener("click", null);
     } else if (operator !== `` && !secondOperand.includes(`.`)) {
         if (secondOperand.length === 0) {
             secondOperand += `0.`;
         } else {
             secondOperand += `.`;
-            updateDisplay();
+            //updateDisplay();
             decimalButton.removeEventListener("click", null);
         }
     }
+    updateDisplay();
 }
 
 function deleteInput() {
