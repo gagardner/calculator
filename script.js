@@ -109,7 +109,7 @@ function equals() {
         result = operate(lastOperator, firstOperand, secondOperandStore);
     }
 
-    firstOperand = result.toString();
+    firstOperand = round(result).toString();
     secondOperand = ``;
     result = ``;
     //operator = ``;
@@ -148,6 +148,10 @@ function deleteInput() {
     } else if (operator !== ``) {
         secondOperand = secondOperand.slice(0, -1);
     }
+}
+
+function round(num) {
+    return Math.round(num * 100000) / 100000;
 }
 
 function updateDisplay() {
