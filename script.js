@@ -103,7 +103,9 @@ function operate(operator, a, b) {
 }
 
 function equals() {
-    if (firstOperand !== `0` && secondOperand !== ``) {
+    if (secondOperand === `` && secondOperandStore === ``) {
+        return;
+    } else if (firstOperand !== `0` && secondOperand !== ``) {
         result = operate(operator, firstOperand, secondOperand);
     } else if (firstOperand !== `0` && secondOperand === ``) {
         result = operate(lastOperator, firstOperand, secondOperandStore);
