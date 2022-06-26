@@ -60,7 +60,6 @@ function processNum(input) {
         }
     }
     secondOperandStore = secondOperand;
-    updateDisplay();
 }
 
 function processFunc(input) {
@@ -72,7 +71,6 @@ function processFunc(input) {
     } else if (firstOperand !== `0`) {
         operator = input;
     }
-    updateDisplay();
     lastOperator = input;
 }
 
@@ -111,7 +109,7 @@ function equals() {
         result = operate(lastOperator, firstOperand, secondOperandStore);
     }
 
-    firstOperand = result;
+    firstOperand = result.toString();
     secondOperand = ``;
     result = ``;
     //operator = ``;
@@ -138,7 +136,6 @@ function addDecimal() {
             decimalButton.removeEventListener("click", null);
         }
     }
-    updateDisplay();
 }
 
 function deleteInput() {
