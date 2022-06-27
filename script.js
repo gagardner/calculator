@@ -4,12 +4,14 @@ let equalsButton = document.querySelector(`.equals-button`);
 let decimalButton = document.querySelector(`.decimal-button`);
 let delButton = document.querySelector(`.del-button`);
 let display = document.querySelector(`.display`);
+let prevDisplay = document.querySelector(`.prev-display`);
 
 let firstOperand = `0`;
 let secondOperand = ``;
 let operator = ``;
 let result = ``;
 let lastOperator = ``;
+let firstOperandStore = ``;
 let secondOperandStore = ``;
 
 numButtons.forEach((button) =>{
@@ -43,7 +45,7 @@ delButton.addEventListener("click", () => {
 
 function processNum(input) {
     if (operator === ``) {
-        if (firstOperand === 0 && input === `0`) {
+        if (firstOperand === `0` && input === `0`) {
             return;
         } else if (firstOperand === `0` && input !== 0) {
             firstOperand = input;
@@ -59,18 +61,23 @@ function processNum(input) {
             secondOperand += input;
         }
     }
+
+    firstOperandStore = firstOperand;
     secondOperandStore = secondOperand;
 }
 
 function processFunc(input) {
     if (input === `C`) {
         clear();
-    } else if (firstOperand !== `0` && secondOperand !== ``) {
+        return;
+    } else if (secondOperand !== ``) {
         equals();
         operator = input;
-    } else if (firstOperand !== `0`) {
+    } else {
         operator = input;
     }
+
+    prevDisplay.textContent = `${firstOperand} ${operator}`;
     lastOperator = input;
 }
 
@@ -105,12 +112,13 @@ function operate(operator, a, b) {
 function equals() {
     if (secondOperand === `` && secondOperandStore === ``) {
         return;
-    } else if (firstOperand !== `0` && secondOperand !== ``) {
+    } else if (secondOperand !== ``) {
         result = operate(operator, firstOperand, secondOperand);
-    } else if (firstOperand !== `0` && secondOperand === ``) {
+    } else if (secondOperand === ``) {
         result = operate(lastOperator, firstOperand, secondOperandStore);
     }
 
+    prevDisplay.textContent = `${firstOperand} ${operator} ${secondOperandStore} =`;
     firstOperand = round(result).toString();
     secondOperand = ``;
     result = ``;
@@ -123,6 +131,7 @@ function clear() {
     secondOperand = ``;
     operator = ``;
     result = ``;
+    prevDisplay.textContent = ``;
 }
 
 function addDecimal() {
@@ -162,6 +171,7 @@ function updateDisplay() {
         display.textContent = firstOperand;
     } else if (operator !== `` && secondOperand.length >= 1) {
         display.textContent = secondOperand;
+        prevDisplay.textContent = `${firstOperand} ${operator}`;
     } else if (operator === ``) {
         display.textContent = firstOperand;
     } else {

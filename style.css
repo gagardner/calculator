@@ -17,7 +17,7 @@ button {
     background-color: lightblue;
 }
 
-.display {
+.display-container {
     border: 2px solid grey;
     border-radius: 6px;
     padding: 10px;
@@ -26,9 +26,13 @@ button {
     background-color: greenyellow;
     font-size: 20px;
     font-weight: bolder;
-    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
+.prev-display {
+    font-size: 14px;
+}
 
 .left-column {
     display: flex;
