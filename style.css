@@ -1,23 +1,32 @@
-body {
-    display: flex;
-}
+
 
 button {
-    background-color: darkgray;
-    color: white;
+    background-color: lightgrey;
+    color: #303030;
     border-radius: 4px;
     padding: 6px;
     font-size: 14px;
     font-weight: bolder;
 }
 
+#clear-button {
+    background-color: lightcoral;
+}
+
+#del-button {
+    background-color: lightblue;
+}
+
 .display {
-    border: 1px solid black;
+    border: 2px solid grey;
+    border-radius: 6px;
     padding: 10px;
+    margin: 20px;
     text-align: right;
     background-color: greenyellow;
     font-size: 20px;
     font-weight: bolder;
+    word-wrap: break-word;
 }
 
 
@@ -36,15 +45,22 @@ button {
 }
 
 .calculator-container {
+    display: flex;
+    flex-direction: column;
+    background-color: midnightblue;
+    border: 3px solid grey;
+    border-radius: 16px;
     width: 400px;
-    height: 800px;
+    height: 300px;
 }
 
 .button-container {
-    background-color: midnightblue;
-    border: 1px solid black;
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 6px;
-    padding: 20px;
+    padding: 0px 20px;
+}
+
+.span-2 {
+    grid-column: span 2;
 }
